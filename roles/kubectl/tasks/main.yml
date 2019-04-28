@@ -1,0 +1,38 @@
+---
+# tasks file for kubectl
+- name: Import Kubernetes PGP key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  tags: kubectl
+
+- name: Make sure 'apt-transport-https' is installed
+  apt:
+    name: apt-transport-https
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
+  tags: kubectl
+
+- name: Verify if Kubernetes repository file exists
+  stat:
+    path: /etc/apt/sources.list.d/kubernetes.list
+  register: st
+  tags: kubectl
+
+- name: Add Kubernetes repository if not exists
+  copy:
+    src: kubernetes.list
+    dest: /etc/apt/sources.list.d
+    mode: 0644
+  when: st.stat.exists == False
+  tags: kubectl
+
+- name: Install Kubernetes command line tool
+  apt:
+    name: kubectl
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+  tags: kubectl
+...
