@@ -1,0 +1,10 @@
+---
+- name: Install Kubernetes
+  hosts: localhost
+  connection: local
+  become: yes
+
+  roles:
+  - kubectl
+  - minikube
+...
