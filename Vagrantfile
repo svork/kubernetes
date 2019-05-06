@@ -9,7 +9,7 @@ VM_NAME3 = "worker2"
 # Virtual machine private IP address
 VM_PRIVATE_IP = "192.168.56.4"
 VM_PRIVATE_IP2 = "192.168.56.5"
-VM_PRIVATE_IP3 = "192.168.56.5"
+VM_PRIVATE_IP3 = "192.168.56.6"
 
 # Box definition
 Vagrant.configure("2") do |config|
