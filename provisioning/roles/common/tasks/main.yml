@@ -1,0 +1,50 @@
+---
+# tasks file for common
+- name: Import Kubernetes PGP key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  tags: common
+
+- name: Add Kubernetes repository
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: kubernetes
+  tags: common
+
+- name: Import Docker PGP key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+  tags: common
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/debian docker stable
+    state: present
+    filename: docker
+  tags: common
+
+- name: Make sure 'apt-transport-https' is installed
+  apt:
+    name: apt-transport-https
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
+  tags: common
+
+- name: Install Kubernetes and Docker
+  apt:
+    name: ['kubeadm', 'kubelet', 'kubectl', 'docker-ce']
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+  tags: common
+
+- name: Make sure Kubernetes packages will NOT be automatically upgraded, once they require a special procedure
+  dpkg_selections:
+    name: ['kubeadm', 'kubelet', 'kubectl']
+    selection: hold
+  tags: common
+...

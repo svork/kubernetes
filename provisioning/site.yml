@@ -1,0 +1,17 @@
+---
+- name: Deploy Kubernetes Cluster
+  hosts: kubemaster
+  become: yes
+
+  roles:
+  - common
+  - master
+
+- name: Create Kubernetes Worker
+  hosts: worker1:worker2
+  become: yes
+
+  roles:
+  - common
+  - worker
+...
