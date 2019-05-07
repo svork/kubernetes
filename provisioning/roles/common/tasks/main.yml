@@ -1,5 +1,17 @@
 ---
 # tasks file for common
+- name: Disable swap as recommended by Kubernetes' documentation
+  shell: /sbin/swapoff -a
+  tags: common
+
+- name: Comment swap entry on /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '(.*swap.*)'
+    replace: '# \1'
+    backup: yes
+  tags: common
+
 - name: Make sure 'apt-transport-https' is installed
   apt:
     name: apt-transport-https
@@ -40,11 +52,5 @@
     state: latest
     force_apt_get: yes
     update_cache: yes
-  tags: common
-
-- name: Make sure Kubernetes packages will NOT be automatically upgraded, once they require a special procedure
-  dpkg_selections:
-    name: ['kubeadm', 'kubelet', 'kubectl']
-    selection: hold
   tags: common
 ...
