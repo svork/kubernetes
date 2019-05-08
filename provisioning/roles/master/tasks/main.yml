@@ -6,6 +6,20 @@
     creates: cluster_initialized.txt
   tags: master
 
+- name: Save Kubernetes join command
+  shell: /usr/bin/tail -2 cluster_initialized.txt > join.txt
+  args:
+    chdir: /home/vagrant
+    creates: join.txt
+  tags: master
+
+- name: Copy join.txt file from target to localhost
+  fetch:
+    src: /home/vagrant/join.txt
+    dest: /tmp/
+    flat: yes
+  tags: master
+
 - name: Create '.kube' directory
   file:
     path: /home/vagrant/.kube
