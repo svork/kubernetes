@@ -1,6 +1,19 @@
 ---
+- name: Define Docker cgroup as "systemd"
+  copy:
+    src: daemon.json
+    dest: /etc/docker/
+  tags: master
+
+- name: Restart Docker
+  systemd:
+    name: docker.service
+    state: restarted
+    daemon_reload: yes
+  tags: master
+
 - name: Initialize the Kubernetes cluster
-  shell: kubeadm init --apiserver-advertise-address={{ master_ip }} --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+  shell: "kubeadm init --apiserver-advertise-address={{ master_ip }} --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt"
   args:
     chdir: /home/vagrant
     creates: cluster_initialized.txt
