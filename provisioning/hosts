@@ -2,9 +2,9 @@
 all:
   hosts:
     kubemaster:
-      ansible_host: 192.168.56.4
+      ansible_host: 10.244.0.4
     worker1:
-      ansible_host: 192.168.56.5
+      ansible_host: 10.244.0.5
     worker2:
-      ansible_host: 192.168.56.6
+      ansible_host: 10.244.0.6
 ...
