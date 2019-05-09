@@ -1,0 +1,14 @@
+---
+# tasks file for worker
+- name: Copy Kubernetes join command from localhost to target
+  copy:
+    src: /tmp/join.txt
+    dest: /root/
+  tags: worker
+
+- name: Run Kubernetes join command
+  shell: '$(/bin/cat /root/join.txt)'
+  args:
+    chdir: /root
+  tags: worker
+...
