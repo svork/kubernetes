@@ -15,27 +15,27 @@
 - name: Initialize the Kubernetes cluster
   shell: "kubeadm init --apiserver-advertise-address={{ master_ip }} --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt"
   args:
-    chdir: /home/vagrant
+    chdir: /root
     creates: cluster_initialized.txt
   tags: master
 
 - name: Save Kubernetes join command
   shell: /usr/bin/tail -2 cluster_initialized.txt > join.txt
   args:
-    chdir: /home/vagrant
+    chdir: /root
     creates: join.txt
   tags: master
 
 - name: Copy join.txt file from target to localhost
   fetch:
-    src: /home/vagrant/join.txt
+    src: /root/join.txt
     dest: /tmp/
     flat: yes
   tags: master
 
 - name: Create '.kube' directory
   file:
-    path: /home/vagrant/.kube
+    path: /root/.kube
     state: directory
     mode: 0755
   tags: master
@@ -43,15 +43,13 @@
 - name: Copy configuration file
   copy:
     src: /etc/kubernetes/admin.conf
-    dest: /home/vagrant/.kube/config
+    dest: /root/.kube/config
     remote_src: yes
-    owner: vagrant
   tags: master
 
 - name: Install Flannel as Pod Network, so Pods can talk to each other
-  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml >> pod_network_setup.txt
+  shell: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
   args:
-    chdir: /home/vagrant/
-    creates: pod_network_setup.txt
+    chdir: /root/
   tags: master
 ...
