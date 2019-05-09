@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
 
   # VM1 - Kubernetes Master node
   config.vm.define "kubemaster" do |kubemaster|
-    kubemaster.vm.network :private_network, ip: "10.244.0.4"
+    kubemaster.vm.network :private_network, ip: "192.168.56.4"
     kubemaster.vm.hostname = "kubemaster"
 
     # VM resources
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
 
   # VM2 - Kubernetes Worker node 1
   config.vm.define "worker1" do |worker1|
-    worker1.vm.network :private_network, ip: "10.244.0.5"
+    worker1.vm.network :private_network, ip: "192.168.56.5"
     worker1.vm.hostname = "worker1"
 
     # VM resources
@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
 
   # VM3 - Kubernetes Worker node 2
   config.vm.define "worker2" do |worker2|
-    worker2.vm.network :private_network, ip: "10.244.0.6"
+    worker2.vm.network :private_network, ip: "192.168.56.6"
     worker2.vm.hostname = "worker2"
 
     # VM resources
