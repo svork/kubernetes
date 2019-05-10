@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-a
+  labels:
+    env: dev
+
+spec:
+  containers:
+  - name: app-a
+    image: busybox:1.30
+    command: ['sh', '-c', 'echo This is my first app running on Kubernetes && sleep 300']
+
+  initContainers:
+  - name: init-a
+    image: busybox:1.30
+    command: ['sh', '-c', 'until nslookup service-a; do echo waiting for service-a; sleep 2; done;']
+...
