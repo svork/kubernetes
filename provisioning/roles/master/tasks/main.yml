@@ -20,7 +20,7 @@
   tags: master
 
 - name: Save Kubernetes join command
-  shell: /usr/bin/tail -2 cluster_initialized.txt > join.txt
+  shell: "kubeadm token create --print-join-command > join.txt"
   args:
     chdir: /root
     creates: join.txt
