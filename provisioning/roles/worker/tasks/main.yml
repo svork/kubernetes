@@ -7,7 +7,7 @@
   tags: worker
 
 - name: Run Kubernetes join command
-  shell: '$(/bin/cat /root/join.txt)'
+  shell: "$(/bin/cat /root/join.txt)"
   args:
     chdir: /root
   tags: worker
