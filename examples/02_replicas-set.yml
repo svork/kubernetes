@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: testado
+    env: dev
+    tier: frontend
+
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: testado
+  template:
+    metadata:
+      labels:
+        app: testado
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google_samples/gb-frontend:v3
+...
