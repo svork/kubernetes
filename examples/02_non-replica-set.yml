@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: this-pod-should-not-be-replicated
+  labels:
+    app: testado # But it will be replicated, because it has the same label
+    env: dev
+
+spec:
+  containers:
+  - name: hello-world
+    image: gcr.io/google_samples/hello-app:2.0
+...
